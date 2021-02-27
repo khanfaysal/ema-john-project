@@ -1,0 +1,18 @@
+.product{
+    display: flex;
+    border-bottom: 1px solid lightgray;
+    margin: 0px 10px 5px 0px;
+    padding-bottom: 5px;
+}
+.product-name h3{
+    color: blue;
+    font-weight: 400;
+}
+.product-button{
+    background-color: goldenrod;
+    width: 170px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
