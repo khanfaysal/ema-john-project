@@ -13,8 +13,6 @@ const ProductDetail = () => {
         <div>
             <h1>Your Product Details.</h1>
             <Product showAddToCart = {false} product ={product}></Product>
-
-            
         </div>
     );
 };
