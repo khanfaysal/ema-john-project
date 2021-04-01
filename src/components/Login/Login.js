@@ -5,13 +5,21 @@ import firebaseConfig from './firebase.config'
 import { useContext, useState } from 'react';
 import { UserContext } from "../../App.js";
 import { useHistory, useLocation } from "react-router";
+import GoogleAuthentication from "../GoogleAuthentication/GoogleAuthentication.js";
 
 
-if( firebase.apps.length === 0 ){
-  firebase.initializeApp(firebaseConfig);
-}
 
 function Login() {
+
+  if( firebase.apps.length === 0 ){
+    firebase.initializeApp(firebaseConfig);
+  }
+  
+  //   context api use part
+  const [logInUser, setLogInUser] = useContext(UserContext);
+  const history = useHistory();
+  const location = useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
   const [newUser, setNewUser] = useState(false)
   const [user , setUser] = useState({
     isSignIn: false,
@@ -22,20 +30,18 @@ function Login() {
     error: '',
     success: '',
   });
-    //   context api use part
-    const [logInUser, setLogInUser] = useContext(UserContext);
-    const history = useHistory();
-    const location = useLocation();
-    let { from } = location.state || { from: { pathname: "/" } };
+    
    // total form controlling function 
    const handleSubmit = (e) => {
     if(newUser && user.email && user.password){
       firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
       .then((res) => {
         const newUserInfo = {...user};
+        console.log(newUserInfo)
         newUserInfo.error = '';
         newUserInfo.success = true;
         setUser(newUserInfo);
+        setLogInUser(newUserInfo);
         updateUserName(user.name);
         
       })
@@ -59,7 +65,7 @@ function Login() {
       })
         .catch((error) => {
           const newUserInfo = {...user};
-        // newUserInfo[error] = e.target.value;
+        newUserInfo[error] = e.target.value;
         newUserInfo.error = error.message;
         newUserInfo.success = false;
         setUser(newUserInfo);
@@ -114,6 +120,7 @@ function Login() {
      {
        user.success && <p style = {{color: 'green'}}>user {newUser ? 'created':'Log In'} successfully</p>
      }
+     <GoogleAuthentication></GoogleAuthentication>
     </div>
   );
 }

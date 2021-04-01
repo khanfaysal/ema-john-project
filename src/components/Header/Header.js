@@ -1,11 +1,11 @@
-import React, { UseContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App.js';
 import logo from '../../images/logo.png';
 import './Header.css';
 
-const header = () => {
-    const [logInUser, setLogInUser] = UseContext(UserContext);
+const Header = () => {
+    const [logInUser, setLogInUser] = useContext(UserContext);
     return (
         <div className ="header">
             <img src={logo} alt=""/>
@@ -19,4 +19,4 @@ const header = () => {
     );
 };
 
-export default header;
+export default Header;
